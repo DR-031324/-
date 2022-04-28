@@ -1,0 +1,48 @@
+"""
+给定一个整数数组 arr，如果它是有效的山脉数组就返回 true，否则返回 false。
+让我们回顾一下，如果 arr 满足下述条件，那么它是一个山脉数组：
+arr.length >= 3
+在 0 < i < arr.length - 1 条件下，存在 i 使得：
+arr[0] < arr[1] < ... arr[i-1] < arr[i]
+arr[i] > arr[i+1] > ... > arr[arr.length - 1]
+ 
+"""
+
+
+class Solution(object):
+    def validMountainArray(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: bool
+        """
+        Length = len(arr)
+        ma = max(arr)
+        p_ma = arr.index(ma)
+        if Length < 3:
+            return False
+        e = range(0, p_ma)
+        r = range(p_ma, Length - 1)
+        for i in e:
+            if arr[i] >= arr[i + 1]:
+                return False
+        for i in r:
+            if arr[i] <= arr[i + 1]:
+                return False
+        if arr == sorted(arr):
+            return False
+        g = sorted(arr)
+        # g.sort()
+        g.reverse()
+        if g == arr:
+            return False
+        return True
+
+
+s = Solution()
+abc = [9,8,7,6,5,4,3,2,1,0]
+print(s.validMountainArray(abc))
+
+
+s = Solution()
+abc = [0, 3, 2, 1]
+print(s.validMountainArray(abc))
